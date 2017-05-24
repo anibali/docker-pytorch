@@ -57,6 +57,9 @@ RUN sudo apt-get update \
  && sudo apt-get install -y --no-install-recommends libx11-6 \
  && sudo rm -rf /var/lib/apt/lists/*
 
+# Install Torchnet
+RUN pip install git+https://github.com/pytorch/tnt.git@master
+
 # No CUDA-specific steps
 
 CMD ["python3"]
