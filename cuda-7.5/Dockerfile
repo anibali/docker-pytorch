@@ -1,9 +1,10 @@
 FROM nvidia/cuda:7.5-cudnn5-devel
 
-# Install curl
+# Install curl and sudo
 RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
+    sudo \
  && rm -rf /var/lib/apt/lists/*
 
 # Use Tini as the init process with PID 1
@@ -11,20 +12,25 @@ RUN curl -Lso /tini https://github.com/krallin/tini/releases/download/v0.14.0/ti
  && chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Create a working directory
+RUN mkdir /app
+WORKDIR /app
+
+# Create a non-root user and switch to it
+RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
+ && chown -R user:user /app
+RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
+USER user
+
+# Install packages for building software and X11 client
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     build-essential \
     cmake \
     git \
     libjpeg-dev \
     libpng-dev \
- && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir /app
-WORKDIR /app
-RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
- && chown -R user:user /app
-RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
-USER user
+    libx11-6 \
+ && sudo rm -rf /var/lib/apt/lists/*
 
 # Install Miniconda
 RUN curl -so ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.3.14-Linux-x86_64.sh \
@@ -51,11 +57,6 @@ RUN conda install -y --name pytorch-py36 \
     h5py \
  && conda clean -ya
 RUN pip install h5py-cache
-
-# Install X11 client
-RUN sudo apt-get update \
- && sudo apt-get install -y --no-install-recommends libx11-6 \
- && sudo rm -rf /var/lib/apt/lists/*
 
 # Install Torchnet
 RUN pip install git+https://github.com/pytorch/tnt.git@master
