@@ -58,8 +58,18 @@ RUN conda install -y --name pytorch-py36 \
  && conda clean -ya
 RUN pip install h5py-cache
 
-# Install Torchnet
+# Install Torchnet, a high-level framework for PyTorch
 RUN pip install git+https://github.com/pytorch/tnt.git@master
+
+# Install Requests, a Python library for making HTTP requests
+RUN conda install -y --name pytorch-py36 requests && conda clean -ya
+
+# Install OpenCV3 Python bindings
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+    libgtk2.0-0 \
+    libcanberra-gtk-module \
+ && sudo rm -rf /var/lib/apt/lists/*
+RUN conda install -y --name pytorch-py36 -c menpo opencv3
 
 $ADDITIONAL_STEPS
 
