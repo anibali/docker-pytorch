@@ -61,6 +61,7 @@ the following command:
 
 ```sh
 nvidia-docker run --rm -it \
+  --ipc=host \
   --volume=$PWD:/app \
   -e CUDA_VISIBLE_DEVICES=0 \
   pytorch python3 main.py
@@ -73,6 +74,9 @@ An important thing to remember is that the default working directory in the
 container is `/app`. By creating a volume which maps the current
 working directory to that location in the image, `python3` is able to find and
 run our script.
+
+The `--ipc=host` option is required for multiprocessing, as explained
+at https://github.com/pytorch/pytorch#docker-image.
 
 ##### Running graphical applications
 
@@ -96,6 +100,7 @@ example:
 
 ```sh
 nvidia-docker run --rm -it \
+  --ipc=host \
   --volume=$PWD:/app \
   -e CUDA_VISIBLE_DEVICES=0 \
   -e "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
