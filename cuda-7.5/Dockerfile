@@ -22,13 +22,9 @@ RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
 RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
 USER user
 
-# Install packages for building software and X11 client
+# Install Git and X11 client
 RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-    build-essential \
-    cmake \
     git \
-    libjpeg-dev \
-    libpng-dev \
     libx11-6 \
  && sudo rm -rf /var/lib/apt/lists/*
 
@@ -47,10 +43,40 @@ ENV PATH=/home/user/miniconda/envs/pytorch-py36/bin:$PATH \
     CONDA_DEFAULT_ENV=pytorch-py36 \
     CONDA_PREFIX=/home/user/miniconda/envs/pytorch-py36
 
-# Install PyTorch
+# CUDA 7.5-specific steps
 RUN conda install -y --name pytorch-py36 -c soumith \
-    pytorch torchvision \
+    magma-cuda75 \
  && conda clean -ya
+
+# # Install PyTorch and torch-vision from Conda repo
+# RUN conda install -y --name pytorch-py36 -c soumith \
+#     pytorch torchvision \
+#  && conda clean -ya
+
+# Install packages for building PyTorch
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+    build-essential \
+    cmake \
+    libjpeg-dev \
+    libpng-dev \
+ && sudo rm -rf /var/lib/apt/lists/*
+
+# Build PyTorch from source
+RUN git clone https://github.com/pytorch/pytorch.git \
+ && cd pytorch \
+ && git checkout 4eb448a051a1421de1dda9bd2ddfb34396eb7287 \
+ && TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1+PTX" \
+    TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
+    CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
+    python setup.py install \
+ && rm -rf pytorch
+
+# Build torch-vision from source
+RUN git clone https://github.com/pytorch/vision.git \
+ && cd vision \
+ && git checkout 83263d8571c9cdd46f250a7986a5219ed29d19a1 \
+ && python setup.py install \
+ && rm -rf vision
 
 # Install HDF5 Python bindings
 RUN conda install -y --name pytorch-py36 \
@@ -64,22 +90,17 @@ RUN pip install git+https://github.com/pytorch/tnt.git@master
 # Install Requests, a Python library for making HTTP requests
 RUN conda install -y --name pytorch-py36 requests && conda clean -ya
 
+# Install Graphviz
+RUN conda install -y --name pytorch-py36 graphviz=2.38.0 \
+ && conda clean -ya
+RUN pip install graphviz
+
 # Install OpenCV3 Python bindings
 RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     libgtk2.0-0 \
     libcanberra-gtk-module \
  && sudo rm -rf /var/lib/apt/lists/*
 RUN conda install -y --name pytorch-py36 -c menpo opencv3 \
- && conda clean -ya
-
-# Install Graphviz
-RUN conda install -y --name pytorch-py36 graphviz=2.38.0 \
- && conda clean -ya
-RUN pip install graphviz
-
-# CUDA 7.5-specific steps
-RUN conda install -y --name pytorch-py36 -c soumith \
-    magma-cuda75 \
  && conda clean -ya
 
 # Set the default command to python3

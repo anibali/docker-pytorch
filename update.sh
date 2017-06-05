@@ -50,4 +50,5 @@ RUN conda install -y --name pytorch-py36 -c soumith \
 make_dockerfile \
   'no-cuda/Dockerfile' \
   'ubuntu:16.04' \
-  '# No CUDA-specific steps'
+  '# No CUDA-specific steps
+ENV NO_CUDA=1'
