@@ -22,9 +22,10 @@ RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
 RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
 USER user
 
-# Install Git and X11 client
+# Install Git, bzip2, and X11 client
 RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     git \
+    bzip2 \
     libx11-6 \
  && sudo rm -rf /var/lib/apt/lists/*
 
