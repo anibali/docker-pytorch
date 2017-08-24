@@ -49,35 +49,10 @@ RUN conda install -y --name pytorch-py36 -c soumith \
     magma-cuda75 \
  && conda clean -ya
 
-# # Install PyTorch and torch-vision from Conda repo
-# RUN conda install -y --name pytorch-py36 -c soumith \
-#     pytorch torchvision \
-#  && conda clean -ya
-
-# Install packages for building PyTorch
-RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-    build-essential \
-    cmake \
-    libjpeg-dev \
-    libpng-dev \
- && sudo rm -rf /var/lib/apt/lists/*
-
-# Build PyTorch from source
-RUN git clone https://github.com/pytorch/pytorch.git \
- && cd pytorch \
- && git checkout 4eb448a051a1421de1dda9bd2ddfb34396eb7287 \
- && TORCH_CUDA_ARCH_LIST="3.5 5.2 6.0 6.1+PTX" \
-    TORCH_NVCC_FLAGS="-Xfatbin -compress-all" \
-    CMAKE_PREFIX_PATH="$(dirname $(which conda))/../" \
-    python setup.py install \
- && rm -rf pytorch
-
-# Build torch-vision from source
-RUN git clone https://github.com/pytorch/vision.git \
- && cd vision \
- && git checkout 83263d8571c9cdd46f250a7986a5219ed29d19a1 \
- && python setup.py install \
- && rm -rf vision
+# Install PyTorch and Torchvision
+RUN conda install -y --name pytorch-py36 -c soumith \
+    pytorch=0.2.0 torchvision=0.1.9 \
+ && conda clean -ya
 
 # Install HDF5 Python bindings
 RUN conda install -y --name pytorch-py36 \
