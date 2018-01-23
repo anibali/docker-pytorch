@@ -106,3 +106,13 @@ nvidia-docker run --rm -it \
   -e "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
   pytorch python3 -c "import tkinter; tkinter.Tk().mainloop()"
 ```
+
+
+##### Running Jupyter Notebook 
+
+Build the image using the following command:
+
+```sh
+docker build -t notebook ./jupyter_python3
+docker run -it --rm -p 8888:8888 notebook
+```
