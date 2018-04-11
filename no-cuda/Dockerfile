@@ -49,7 +49,7 @@ ENV NO_CUDA=1
 
 # Install PyTorch and Torchvision
 RUN conda install -y --name pytorch-py36 -c soumith \
-    pytorch=0.2.0 torchvision=0.1.9 \
+    pytorch=0.3.1 torchvision=0.2.0 \
  && conda clean -ya
 
 # Install HDF5 Python bindings
