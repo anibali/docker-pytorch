@@ -1,16 +1,14 @@
 FROM nvidia/cuda:8.0-cudnn5-devel
 
-# Install curl and sudo
+# Install some basic utilities
 RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
     sudo \
+    git \
+    bzip2 \
+    libx11-6 \
  && rm -rf /var/lib/apt/lists/*
-
-# Use Tini as the init process with PID 1
-RUN curl -Lso /tini https://github.com/krallin/tini/releases/download/v0.14.0/tini \
- && chmod +x /tini
-ENTRYPOINT ["/tini", "--"]
 
 # Create a working directory
 RUN mkdir /app
@@ -22,27 +20,29 @@ RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
 RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
 USER user
 
-# Install Git, bzip2, and X11 client
-RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
-    git \
-    bzip2 \
-    libx11-6 \
- && sudo rm -rf /var/lib/apt/lists/*
+# All users can use /home/user as their home directory
+ENV HOME=/home/user
+RUN chmod 777 /home/user
 
 # Install Miniconda
-RUN curl -so ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.3.14-Linux-x86_64.sh \
+RUN curl -so ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.4.10-Linux-x86_64.sh \
  && chmod +x ~/miniconda.sh \
  && ~/miniconda.sh -b -p ~/miniconda \
  && rm ~/miniconda.sh
+ENV PATH=/home/user/miniconda/bin:$PATH
 
 # Create a Python 3.6 environment
 RUN /home/user/miniconda/bin/conda install conda-build \
- && /home/user/miniconda/bin/conda create -y --name pytorch-py36 \
-    python=3.6.0 numpy pyyaml scipy ipython mkl \
+ && /home/user/miniconda/bin/conda create -y --name py36 python=3.6.4 \
  && /home/user/miniconda/bin/conda clean -ya
-ENV PATH=/home/user/miniconda/envs/pytorch-py36/bin:$PATH \
-    CONDA_DEFAULT_ENV=pytorch-py36 \
-    CONDA_PREFIX=/home/user/miniconda/envs/pytorch-py36
+ENV CONDA_DEFAULT_ENV=py36
+ENV CONDA_PREFIX=/home/user/miniconda/envs/$CONDA_DEFAULT_ENV
+ENV PATH=$CONDA_PREFIX/bin:$PATH
+
+# Ensure conda version is at least 4.4.11
+# (because of this issue: https://github.com/conda/conda/issues/6811)
+ENV CONDA_AUTO_UPDATE_CONDA=false
+RUN conda install -y "conda>=4.4.11" && conda clean -ya
 
 # CUDA 8.0-specific steps
 RUN conda install -y --name pytorch-py36 -c soumith \
@@ -50,12 +50,13 @@ RUN conda install -y --name pytorch-py36 -c soumith \
  && conda clean -ya
 
 # Install PyTorch and Torchvision
-RUN conda install -y --name pytorch-py36 -c soumith \
-    pytorch=0.3.1 torchvision=0.2.0 \
+RUN conda install -y -c pytorch \
+    pytorch=0.3.1 \
+    torchvision=0.2.0 \
  && conda clean -ya
 
 # Install HDF5 Python bindings
-RUN conda install -y --name pytorch-py36 \
+RUN conda install -y \
     h5py \
  && conda clean -ya
 RUN pip install h5py-cache
@@ -64,10 +65,10 @@ RUN pip install h5py-cache
 RUN pip install git+https://github.com/pytorch/tnt.git@master
 
 # Install Requests, a Python library for making HTTP requests
-RUN conda install -y --name pytorch-py36 requests && conda clean -ya
+RUN conda install -y requests && conda clean -ya
 
 # Install Graphviz
-RUN conda install -y --name pytorch-py36 graphviz=2.38.0 \
+RUN conda install -y graphviz=2.38.0 \
  && conda clean -ya
 RUN pip install graphviz
 
@@ -76,7 +77,7 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     libgtk2.0-0 \
     libcanberra-gtk-module \
  && sudo rm -rf /var/lib/apt/lists/*
-RUN conda install -y --name pytorch-py36 -c menpo opencv3 \
+RUN conda install -y -c menpo opencv3 \
  && conda clean -ya
 
 # Set the default command to python3

@@ -1,4 +1,4 @@
-FROM $BASE
+FROM nvidia/cuda:9.1-base-ubuntu16.04
 
 # Install some basic utilities
 RUN apt-get update && apt-get install -y \
@@ -44,7 +44,12 @@ ENV PATH=$CONDA_PREFIX/bin:$PATH
 ENV CONDA_AUTO_UPDATE_CONDA=false
 RUN conda install -y "conda>=4.4.11" && conda clean -ya
 
-$ADDITIONAL_STEPS
+# CUDA 9.1-specific steps
+RUN conda install -y -c pytorch \
+    cuda91=1.0 \
+    magma-cuda91=2.3.0 \
+    cudnn=7.0.5 \
+ && conda clean -ya
 
 # Install PyTorch and Torchvision
 RUN conda install -y -c pytorch \

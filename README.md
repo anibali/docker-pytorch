@@ -1,7 +1,6 @@
 ### PyTorch Docker image
 
-Ubuntu [14.04|16.04] + PyTorch + CUDA [7.5|8.0|none]
-
+Ubuntu [14.04|16.04] + PyTorch + CUDA [7.5|8.0|9.1|none]
 
 #### Requirements
 
@@ -32,10 +31,12 @@ appropriate drivers and CUDA libraries installed.
 Build the image using the following command:
 
 ```sh
-# If you have CUDA 7.5:
-docker build -t pytorch ./cuda-7.5
+# If you have CUDA 9.1:
+docker build -t pytorch ./cuda-9.1
 # If you have CUDA 8.0:
 docker build -t pytorch ./cuda-8.0
+# If you have CUDA 7.5:
+docker build -t pytorch ./cuda-7.5
 ```
 
 You will also need to install `nvidia-docker`, which we will use to start the
@@ -60,23 +61,34 @@ some PyTorch project with entrypoint `main.py`, you could run it with
 the following command:
 
 ```sh
-nvidia-docker run --rm -it \
+docker run --rm -it --init \
+  --runtime=nvidia \
   --ipc=host \
+  --user="$(id -u):$(id -g)" \
   --volume=$PWD:/app \
-  -e CUDA_VISIBLE_DEVICES=0 \
+  -e NVIDIA_VISIBLE_DEVICES=0 \
   pytorch python3 main.py
 ```
 
-The environment variable `CUDA_VISIBLE_DEVICES` controls which GPU device is
-exposed to the program.
+Here's a description of the Docker command-line options shown above:
 
-An important thing to remember is that the default working directory in the
-container is `/app`. By creating a volume which maps the current
-working directory to that location in the image, `python3` is able to find and
-run our script.
+* `--runtime=nvidia`: Required if using CUDA, optional otherwise. Passes the
+  graphics card from the host to the container.
+* `--ipc-host`: Required if using multiprocessing, as explained at
+  https://github.com/pytorch/pytorch#docker-image.
+* `--user="$(id -u):$(id -g)"`: Sets the user inside the container to match your
+  user and group ID. Optional, but is useful for writing files with correct
+  ownership.
+* `--volume=$PWD:/app`: Mounts the current working directory into the container.
+  The default working directory inside the container is `/app`. Optional.
+* `-e NVIDIA_VISIBLE_DEVICES=0`: Sets an environment variable to restrict which
+  graphics cards are seen by programs running inside the container. Set to `all`
+  to enable all cards. Optional, defaults to all.
 
-The `--ipc=host` option is required for multiprocessing, as explained
-at https://github.com/pytorch/pytorch#docker-image.
+You may wish to consider using [Docker Compose](https://docs.docker.com/compose/)
+to make running containers with many options easier. At the time of writing,
+only version 2.3 of Docker Compose configuration files supports the `runtime`
+option.
 
 ##### Running graphical applications
 
@@ -99,10 +111,8 @@ with your X11 socket for communication and your display ID. Here's an
 example:
 
 ```sh
-nvidia-docker run --rm -it \
-  --ipc=host \
-  --volume=$PWD:/app \
-  -e CUDA_VISIBLE_DEVICES=0 \
+docker run --rm -it --init \
+  --runtime=nvidia \
   -e "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
   pytorch python3 -c "import tkinter; tkinter.Tk().mainloop()"
 ```
