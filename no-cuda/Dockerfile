@@ -46,11 +46,9 @@ RUN conda install -y "conda>=4.4.11" && conda clean -ya
 
 # No CUDA-specific steps
 ENV NO_CUDA=1
-
-# Install PyTorch and Torchvision
 RUN conda install -y -c pytorch \
-    pytorch=0.3.1 \
-    torchvision=0.2.0 \
+    pytorch=0.4.0 \
+    torchvision=0.2.1 \
  && conda clean -ya
 
 # Install HDF5 Python bindings

@@ -1,4 +1,4 @@
-FROM nvidia/cuda:7.5-cudnn5-devel
+FROM nvidia/cuda:7.5-runtime-ubuntu14.04
 
 # Install some basic utilities
 RUN apt-get update && apt-get install -y \
@@ -45,13 +45,10 @@ ENV CONDA_AUTO_UPDATE_CONDA=false
 RUN conda install -y "conda>=4.4.11" && conda clean -ya
 
 # CUDA 7.5-specific steps
-RUN conda install -y --name pytorch-py36 -c soumith \
-    magma-cuda75 \
- && conda clean -ya
-
-# Install PyTorch and Torchvision
 RUN conda install -y -c pytorch \
-    pytorch=0.3.1 \
+    cuda75=1.0 \
+    magma-cuda75=2.2.0 \
+    pytorch=0.3.0 \
     torchvision=0.2.0 \
  && conda clean -ya
 

@@ -48,13 +48,8 @@ RUN conda install -y "conda>=4.4.11" && conda clean -ya
 RUN conda install -y -c pytorch \
     cuda91=1.0 \
     magma-cuda91=2.3.0 \
-    cudnn=7.0.5 \
- && conda clean -ya
-
-# Install PyTorch and Torchvision
-RUN conda install -y -c pytorch \
-    pytorch=0.3.1 \
-    torchvision=0.2.0 \
+    pytorch=0.4.0 \
+    torchvision=0.2.1 \
  && conda clean -ya
 
 # Install HDF5 Python bindings
