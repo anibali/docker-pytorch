@@ -64,6 +64,18 @@ RUN conda install -y -c pytorch \
     torchvision=0.2.1 \
  && conda clean -ya'
 
+# CUDA 9.2
+make_dockerfile \
+  'cuda-9.2/Dockerfile' \
+  'nvidia/cuda:9.2-base-ubuntu16.04' \
+  '# CUDA 9.2-specific steps
+RUN conda install -y -c pytorch \
+    cuda92=1.0 \
+    magma-cuda92=2.3.0 \
+    "pytorch=0.4.1=py36_cuda9.2.148_cudnn7.1.4_1" \
+    torchvision=0.2.1 \
+ && conda clean -ya'
+
 # No CUDA
 make_dockerfile \
   'no-cuda/Dockerfile' \

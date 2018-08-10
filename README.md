@@ -25,6 +25,18 @@ If you are running Windows or OSX then you will find it difficult/impossible to
 use GPU acceleration due to the fact that containers run in a virtual machine.
 Use the image without CUDA on those platforms.
 
+##### Version matrix
+
+The table below lists software versions for each of the Dockerfiles.
+
+| Dockerfile | CUDA | PyTorch |
+|------------|------|---------|
+| `no-cuda`  | None | 0.4.0   |
+| `cuda-9.2` | 9.2  | 0.4.1   |
+| `cuda-9.1` | 9.1  | 0.4.0   |
+| `cuda-8.0` | 8.0  | 0.4.0   |
+| `cuda-7.5` | 7.5  | 0.3.0   |
+
 ##### With CUDA
 
 Firstly ensure that you have a supported NVIDIA graphics card with the
@@ -33,6 +45,8 @@ appropriate drivers and CUDA libraries installed.
 Build the image using the following command:
 
 ```sh
+# If you have CUDA 9.2:
+docker build -t pytorch ./cuda-9.2
 # If you have CUDA 9.1:
 docker build -t pytorch ./cuda-9.1
 # If you have CUDA 8.0:

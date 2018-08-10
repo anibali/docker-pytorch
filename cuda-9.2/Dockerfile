@@ -1,4 +1,4 @@
-FROM nvidia/cuda:8.0-runtime-ubuntu16.04
+FROM nvidia/cuda:9.2-base-ubuntu16.04
 
 # Install some basic utilities
 RUN apt-get update && apt-get install -y \
@@ -40,11 +40,11 @@ ENV CONDA_DEFAULT_ENV=py36
 ENV CONDA_PREFIX=/home/user/miniconda/envs/$CONDA_DEFAULT_ENV
 ENV PATH=$CONDA_PREFIX/bin:$PATH
 
-# CUDA 8.0-specific steps
+# CUDA 9.2-specific steps
 RUN conda install -y -c pytorch \
-    cuda80=1.0 \
-    magma-cuda80=2.3.0 \
-    pytorch=0.4.0 \
+    cuda92=1.0 \
+    magma-cuda92=2.3.0 \
+    "pytorch=0.4.1=py36_cuda9.2.148_cudnn7.1.4_1" \
     torchvision=0.2.1 \
  && conda clean -ya
 
