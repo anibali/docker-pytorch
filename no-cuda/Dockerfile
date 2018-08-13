@@ -48,28 +48,28 @@ RUN conda install -y -c pytorch \
  && conda clean -ya
 
 # Install HDF5 Python bindings
-RUN conda install -y \
-    h5py \
+RUN conda install -y h5py=2.8.0 \
  && conda clean -ya
-RUN pip install h5py-cache
+RUN pip install h5py-cache==1.0
 
 # Install Torchnet, a high-level framework for PyTorch
-RUN pip install git+https://github.com/pytorch/tnt.git@master
+RUN pip install torchnet==0.0.4
 
 # Install Requests, a Python library for making HTTP requests
-RUN conda install -y requests && conda clean -ya
+RUN conda install -y requests=2.19.1 \
+ && conda clean -ya
 
 # Install Graphviz
 RUN conda install -y graphviz=2.38.0 \
  && conda clean -ya
-RUN pip install graphviz
+RUN pip install graphviz==0.8.4
 
 # Install OpenCV3 Python bindings
 RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     libgtk2.0-0 \
     libcanberra-gtk-module \
  && sudo rm -rf /var/lib/apt/lists/*
-RUN conda install -y -c menpo opencv3 \
+RUN conda install -y -c menpo opencv3=3.1.0 \
  && conda clean -ya
 
 # Set the default command to python3
