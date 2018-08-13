@@ -28,17 +28,8 @@ function make_dockerfile {
   fi
 }
 
-# CUDA 7.5
-make_dockerfile \
-  'cuda-7.5/Dockerfile' \
-  'nvidia/cuda:7.5-runtime-ubuntu14.04' \
-  '# CUDA 7.5-specific steps
-RUN conda install -y -c pytorch \
-    cuda75=1.0 \
-    magma-cuda75=2.2.0 \
-    pytorch=0.3.0 \
-    torchvision=0.2.0 \
- && conda clean -ya'
+
+### Currently supported images
 
 # CUDA 8.0
 make_dockerfile \
@@ -48,7 +39,7 @@ make_dockerfile \
 RUN conda install -y -c pytorch \
     cuda80=1.0 \
     magma-cuda80=2.3.0 \
-    pytorch=0.4.0 \
+    "pytorch=0.4.1=py36_cuda8.0.61_cudnn7.1.2_1" \
     torchvision=0.2.1 \
  && conda clean -ya'
 
@@ -61,18 +52,6 @@ RUN conda install -y -c pytorch \
     cuda90=1.0 \
     magma-cuda90=2.3.0 \
     "pytorch=0.4.1=py36_cuda9.0.176_cudnn7.1.2_1" \
-    torchvision=0.2.1 \
- && conda clean -ya'
-
-# CUDA 9.1
-make_dockerfile \
-  'cuda-9.1/Dockerfile' \
-  'nvidia/cuda:9.1-base-ubuntu16.04' \
-  '# CUDA 9.1-specific steps
-RUN conda install -y -c pytorch \
-    cuda91=1.0 \
-    magma-cuda91=2.3.0 \
-    pytorch=0.4.0 \
     torchvision=0.2.1 \
  && conda clean -ya'
 
@@ -97,4 +76,31 @@ ENV NO_CUDA=1
 RUN conda install -y -c pytorch \
     pytorch-cpu=0.4.1 \
     torchvision-cpu=0.2.1 \
+ && conda clean -ya'
+
+
+### Deprecated images
+
+# CUDA 7.5
+make_dockerfile \
+  'cuda-7.5/Dockerfile' \
+  'nvidia/cuda:7.5-runtime-ubuntu14.04' \
+  '# CUDA 7.5-specific steps
+RUN conda install -y -c pytorch \
+    cuda75=1.0 \
+    magma-cuda75=2.2.0 \
+    pytorch=0.3.0 \
+    torchvision=0.2.0 \
+ && conda clean -ya'
+
+# CUDA 9.1
+make_dockerfile \
+  'cuda-9.1/Dockerfile' \
+  'nvidia/cuda:9.1-base-ubuntu16.04' \
+  '# CUDA 9.1-specific steps
+RUN conda install -y -c pytorch \
+    cuda91=1.0 \
+    magma-cuda91=2.3.0 \
+    pytorch=0.4.0 \
+    torchvision=0.2.1 \
  && conda clean -ya'

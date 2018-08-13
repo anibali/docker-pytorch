@@ -45,7 +45,7 @@ Docker image tags available for `anibali/pytorch`.
 | `no-cuda`  | None | 0.4.1   |
 | `cuda-9.2` | 9.2  | 0.4.1   |
 | `cuda-9.0` | 9.0  | 0.4.1   |
-| `cuda-8.0` | 8.0  | 0.4.0   |
+| `cuda-8.0` | 8.0  | 0.4.1   |
 
 The following images are also available, but are deprecated.
 
