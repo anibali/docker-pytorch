@@ -1,6 +1,6 @@
 ## PyTorch Docker image
 
-[![Docker Build Status](https://img.shields.io/docker/build/anibali/pytorch.svg)](https://hub.docker.com/r/anibali/pytorch/)
+[![Docker Automated build](https://img.shields.io/docker/automated/anibali/pytorch.svg)](https://hub.docker.com/r/anibali/pytorch/)
 
 Ubuntu + PyTorch + CUDA (optional)
 
