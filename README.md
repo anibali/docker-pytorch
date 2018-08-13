@@ -2,7 +2,8 @@
 
 [![Docker Build Status](https://img.shields.io/docker/build/anibali/pytorch.svg)](https://hub.docker.com/r/anibali/pytorch/)
 
-Ubuntu [14.04|16.04] + PyTorch + CUDA [7.5|8.0|9.1|none]
+Ubuntu + PyTorch + CUDA (optional)
+
 
 #### Requirements
 
@@ -10,68 +11,50 @@ In order to use this image you must have Docker Engine installed. Instructions
 for setting up Docker Engine are
 [available on the Docker website](https://docs.docker.com/engine/installation/).
 
-#### Building
+##### CUDA requirements
 
-This image can be built on top of multiple different base images derived from
-Ubuntu. Which base you choose depends on whether you have an NVIDIA
-graphics card which supports CUDA and you want to use GPU acceleration or not.
+If you have a CUDA-compatible NVIDIA graphics card, you can use a CUDA-enabled
+version of the PyTorch image to enable hardware acceleration. I have only
+tested this in Ubuntu Linux.
 
+Firstly, ensure that you install the appropriate NVIDIA drivers and libraries.
 If you are running Ubuntu, you can install proprietary NVIDIA drivers
 [from the PPA](https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa)
 and CUDA [from the NVIDIA website](https://developer.nvidia.com/cuda-downloads).
-These are only required if you want to use GPU acceleration.
 
-If you are running Windows or OSX then you will find it difficult/impossible to
-use GPU acceleration due to the fact that containers run in a virtual machine.
-Use the image without CUDA on those platforms.
+You will also need to install `nvidia-docker2` to enable GPU device access
+within Docker containers. This can be found at
+[NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
 
-##### Version matrix
 
-The table below lists software versions for each of the Dockerfiles.
+#### Prebuilt images
 
-| Dockerfile | CUDA | PyTorch |
+Pre-built images are available on Docker Hub under the name
+[anibali/pytorch](https://hub.docker.com/r/anibali/pytorch/). For example,
+you can pull the CUDA 9.2 version with:
+
+```bash
+$ docker pull anibali/pytorch:cuda-9.2
+```
+
+The table below lists software versions for each of the Docker image tags
+available for `anibali/pytorch`.
+
+| Image tag  | CUDA | PyTorch |
 |------------|------|---------|
 | `no-cuda`  | None | 0.4.0   |
 | `cuda-9.2` | 9.2  | 0.4.1   |
 | `cuda-9.1` | 9.1  | 0.4.0   |
+| `cuda-9.0` | 9.0  | 0.4.1   |
 | `cuda-8.0` | 8.0  | 0.4.0   |
 | `cuda-7.5` | 7.5  | 0.3.0   |
 
-##### With CUDA
-
-Firstly ensure that you have a supported NVIDIA graphics card with the
-appropriate drivers and CUDA libraries installed.
-
-Build the image using the following command:
-
-```sh
-# If you have CUDA 9.2:
-docker build -t pytorch ./cuda-9.2
-# If you have CUDA 9.1:
-docker build -t pytorch ./cuda-9.1
-# If you have CUDA 8.0:
-docker build -t pytorch ./cuda-8.0
-# If you have CUDA 7.5:
-docker build -t pytorch ./cuda-7.5
-```
-
-You will also need to install `nvidia-docker`, which we will use to start the
-container with GPU access. This can be found at
-[NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
-
-##### Without CUDA
-
-Build the image using the following command:
-
-```sh
-docker build -t torch ./no-cuda
-```
 
 #### Usage
 
 ##### Running PyTorch scripts
 
-It is also possible to run PyTorch programs inside a container using the
+It is possible to run PyTorch programs inside a container using the
 `python3` command. For example, if you are within a directory containing
 some PyTorch project with entrypoint `main.py`, you could run it with
 the following command:
@@ -83,7 +66,7 @@ docker run --rm -it --init \
   --user="$(id -u):$(id -g)" \
   --volume=$PWD:/app \
   -e NVIDIA_VISIBLE_DEVICES=0 \
-  pytorch python3 main.py
+  anibali/pytorch python3 main.py
 ```
 
 Here's a description of the Docker command-line options shown above:
@@ -130,5 +113,5 @@ example:
 docker run --rm -it --init \
   --runtime=nvidia \
   -e "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-  pytorch python3 -c "import tkinter; tkinter.Tk().mainloop()"
+  anibali/pytorch python3 -c "import tkinter; tkinter.Tk().mainloop()"
 ```
