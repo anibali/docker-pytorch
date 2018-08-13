@@ -95,6 +95,6 @@ make_dockerfile \
   '# No CUDA-specific steps
 ENV NO_CUDA=1
 RUN conda install -y -c pytorch \
-    pytorch=0.4.0 \
-    torchvision=0.2.1 \
+    pytorch-cpu=0.4.1 \
+    torchvision-cpu=0.2.1 \
  && conda clean -ya'

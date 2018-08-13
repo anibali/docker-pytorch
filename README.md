@@ -1,17 +1,17 @@
-### PyTorch Docker image
+## PyTorch Docker image
 
 [![Docker Build Status](https://img.shields.io/docker/build/anibali/pytorch.svg)](https://hub.docker.com/r/anibali/pytorch/)
 
 Ubuntu + PyTorch + CUDA (optional)
 
 
-#### Requirements
+### Requirements
 
 In order to use this image you must have Docker Engine installed. Instructions
 for setting up Docker Engine are
 [available on the Docker website](https://docs.docker.com/engine/installation/).
 
-##### CUDA requirements
+#### CUDA requirements
 
 If you have a CUDA-compatible NVIDIA graphics card, you can use a CUDA-enabled
 version of the PyTorch image to enable hardware acceleration. I have only
@@ -27,7 +27,7 @@ within Docker containers. This can be found at
 [NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
 
 
-#### Prebuilt images
+### Prebuilt images
 
 Pre-built images are available on Docker Hub under the name
 [anibali/pytorch](https://hub.docker.com/r/anibali/pytorch/). For example,
@@ -37,22 +37,27 @@ you can pull the CUDA 9.2 version with:
 $ docker pull anibali/pytorch:cuda-9.2
 ```
 
-The table below lists software versions for each of the Docker image tags
-available for `anibali/pytorch`.
+The table below lists software versions for each of the currently supported
+Docker image tags available for `anibali/pytorch`.
 
 | Image tag  | CUDA | PyTorch |
 |------------|------|---------|
-| `no-cuda`  | None | 0.4.0   |
+| `no-cuda`  | None | 0.4.1   |
 | `cuda-9.2` | 9.2  | 0.4.1   |
-| `cuda-9.1` | 9.1  | 0.4.0   |
 | `cuda-9.0` | 9.0  | 0.4.1   |
 | `cuda-8.0` | 8.0  | 0.4.0   |
+
+The following images are also available, but are deprecated.
+
+| Image tag  | CUDA | PyTorch |
+|------------|------|---------|
+| `cuda-9.1` | 9.1  | 0.4.0   |
 | `cuda-7.5` | 7.5  | 0.3.0   |
 
 
-#### Usage
+### Usage
 
-##### Running PyTorch scripts
+#### Running PyTorch scripts
 
 It is possible to run PyTorch programs inside a container using the
 `python3` command. For example, if you are within a directory containing
@@ -89,7 +94,7 @@ to make running containers with many options easier. At the time of writing,
 only version 2.3 of Docker Compose configuration files supports the `runtime`
 option.
 
-##### Running graphical applications
+#### Running graphical applications
 
 If you are running on a Linux host, you can get code running inside the Docker
 container to display graphics using the host X server (this allows you to use
