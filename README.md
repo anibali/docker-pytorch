@@ -78,7 +78,7 @@ Here's a description of the Docker command-line options shown above:
 
 * `--runtime=nvidia`: Required if using CUDA, optional otherwise. Passes the
   graphics card from the host to the container.
-* `--ipc-host`: Required if using multiprocessing, as explained at
+* `--ipc=host`: Required if using multiprocessing, as explained at
   https://github.com/pytorch/pytorch#docker-image.
 * `--user="$(id -u):$(id -g)"`: Sets the user inside the container to match your
   user and group ID. Optional, but is useful for writing files with correct
