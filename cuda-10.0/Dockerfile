@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM nvidia/cuda:10.0-base-ubuntu16.04
 
 # Install some basic utilities
 RUN apt-get update && apt-get install -y \
@@ -40,11 +40,12 @@ ENV CONDA_DEFAULT_ENV=py36
 ENV CONDA_PREFIX=/home/user/miniconda/envs/$CONDA_DEFAULT_ENV
 ENV PATH=$CONDA_PREFIX/bin:$PATH
 
-# No CUDA-specific steps
-ENV NO_CUDA=1
+# CUDA 10.0-specific steps
 RUN conda install -y -c pytorch \
-    pytorch-cpu=1.0.0 \
-    torchvision-cpu=0.2.1 \
+    cuda100=1.0 \
+    magma-cuda100=2.4.0 \
+    "pytorch=1.0.0=py3.6_cuda10.0.130_cudnn7.4.1_1" \
+    torchvision=0.2.1 \
  && conda clean -ya
 
 # Install HDF5 Python bindings

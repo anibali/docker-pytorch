@@ -31,26 +31,27 @@ within Docker containers. This can be found at
 
 Pre-built images are available on Docker Hub under the name
 [anibali/pytorch](https://hub.docker.com/r/anibali/pytorch/). For example,
-you can pull the CUDA 9.2 version with:
+you can pull the CUDA 10.0 version with:
 
 ```bash
-$ docker pull anibali/pytorch:cuda-9.2
+$ docker pull anibali/pytorch:cuda-10.0
 ```
 
 The table below lists software versions for each of the currently supported
 Docker image tags available for `anibali/pytorch`.
 
-| Image tag  | CUDA | PyTorch |
-|------------|------|---------|
-| `no-cuda`  | None | 0.4.1   |
-| `cuda-9.2` | 9.2  | 0.4.1   |
-| `cuda-9.0` | 9.0  | 0.4.1   |
-| `cuda-8.0` | 8.0  | 0.4.1   |
+| Image tag   | CUDA  | PyTorch |
+|-------------|-------|---------|
+| `no-cuda`   | None  | 1.0.0   |
+| `cuda-10.0` | 10.0  | 1.0.0   |
+| `cuda-9.0`  | 9.0   | 1.0.0   |
+| `cuda-8.0`  | 8.0   | 1.0.0   |
 
 The following images are also available, but are deprecated.
 
 | Image tag  | CUDA | PyTorch |
 |------------|------|---------|
+| `cuda-9.2` | 9.2  | 0.4.1   |
 | `cuda-9.1` | 9.1  | 0.4.0   |
 | `cuda-7.5` | 7.5  | 0.3.0   |
 
