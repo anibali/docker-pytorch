@@ -4,7 +4,6 @@
 
 Ubuntu + PyTorch + CUDA (optional)
 
-
 ### Requirements
 
 In order to use this image you must have Docker Engine installed. Instructions
@@ -121,3 +120,35 @@ docker run --rm -it --init \
   -e "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
   anibali/pytorch python3 -c "import tkinter; tkinter.Tk().mainloop()"
 ```
+
+#### Python Dependencies
+
+The full list of the python dependencies in this [file](https://github.com/zaher88abd/docker-pytorch/blob/master/defult_python_dependencies.md).
+However, you want to install another packages, you need to add them to the ```requirements.txt``` 
+file then build the Docker file.
+For example:
+
+1. Clone the reposiorty.
+2. Choose the cuda version you want cuda-9.2:
+
+    * Add ```scikit-image==0.15``` in file ```cuda-9.2->requirements.txt```.
+
+3. Build the docker file:
+
+    ```sh
+    ..docker-pytorch/cuda-9.2 $ docker build -t my_image:cuda_9.2 .
+    ```
+
+    * `myimage`  : is the name of the image which will be created.
+    * `cuda_9.2` : is the tag of the iamge.
+4. Run the container:
+
+    ```sh
+    sudo docker run --rm -it --init \
+    --runtime=nvidia \
+    --ipc=host \
+    --user="$(id -u):$(id -g)" \
+    --volume="$PWD:/app"  \
+    -e NVIDIA_VISIBLE_DEVICES=0 \
+    my_image:cuda_9.2 python main.py
+    ```
