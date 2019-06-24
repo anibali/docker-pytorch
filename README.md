@@ -126,6 +126,9 @@ docker run --rm -it --init \
 The full list of the python dependencies in this [file](https://github.com/zaher88abd/docker-pytorch/blob/master/defult_python_dependencies.md).
 However, you want to install another packages, you need to add them to the ```requirements.txt``` 
 file then build the Docker file.
+
+However, you want to install another packages, you need to add them to the ```requirements.txt``` 
+file then build the Docker file.<br />
 For example:
 
 1. Clone the reposiorty.
