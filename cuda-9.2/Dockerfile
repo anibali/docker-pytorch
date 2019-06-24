@@ -65,6 +65,10 @@ RUN conda install -y graphviz=2.38.0 \
  && conda clean -ya
 RUN pip install graphviz==0.8.4
 
+# Copy the requirement file to the continer 
+ADD /requirements.txt /app/
+RUN pip install -r requirements.txt
+
 # Install OpenCV3 Python bindings
 RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     libgtk2.0-0 \
