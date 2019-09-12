@@ -31,40 +31,26 @@ function make_dockerfile {
 
 ### Currently supported images
 
-# CUDA 8.0
-make_dockerfile \
-  'cuda-8.0/Dockerfile' \
-  'nvidia/cuda:8.0-runtime-ubuntu16.04' \
-  '# CUDA 8.0-specific steps
-RUN conda install -y -c pytorch \
-    cuda80=1.0 \
-    magma-cuda80=2.3.0 \
-    "pytorch=1.0.0=py3.6_cuda8.0.61_cudnn7.1.2_1" \
-    torchvision=0.2.1 \
- && conda clean -ya'
-
-# CUDA 9.0
-make_dockerfile \
-  'cuda-9.0/Dockerfile' \
-  'nvidia/cuda:9.0-base-ubuntu16.04' \
-  '# CUDA 9.0-specific steps
-RUN conda install -y -c pytorch \
-    cuda90=1.0 \
-    magma-cuda90=2.4.0 \
-    "pytorch=1.0.0=py3.6_cuda9.0.176_cudnn7.4.1_1" \
-    torchvision=0.2.1 \
- && conda clean -ya'
-
- # CUDA 10.0
+# CUDA 10.0
 make_dockerfile \
   'cuda-10.0/Dockerfile' \
   'nvidia/cuda:10.0-base-ubuntu16.04' \
   '# CUDA 10.0-specific steps
 RUN conda install -y -c pytorch \
-    cuda100=1.0 \
-    magma-cuda100=2.4.0 \
-    "pytorch=1.0.0=py3.6_cuda10.0.130_cudnn7.4.1_1" \
-    torchvision=0.2.1 \
+    cudatoolkit=10.0 \
+    "pytorch=1.2.0=py3.6_cuda10.0.130_cudnn7.6.2_0" \
+    "torchvision=0.4.0=py36_cu100" \
+ && conda clean -ya'
+
+# CUDA 9.2
+make_dockerfile \
+  'cuda-9.2/Dockerfile' \
+  'nvidia/cuda:9.2-base-ubuntu16.04' \
+  '# CUDA 9.2-specific steps
+RUN conda install -y -c pytorch \
+    cudatoolkit=9.2 \
+    "pytorch=1.2.0=py3.6_cuda9.2.148_cudnn7.6.2_0" \
+    "torchvision=0.4.0=py36_cu92" \
  && conda clean -ya'
 
 # No CUDA
@@ -74,8 +60,9 @@ make_dockerfile \
   '# No CUDA-specific steps
 ENV NO_CUDA=1
 RUN conda install -y -c pytorch \
-    pytorch-cpu=1.0.0 \
-    torchvision-cpu=0.2.1 \
+    cpuonly \
+    "pytorch=1.2.0=py3.6_cpu_0" \
+    "torchvision=0.4.0=py36_cpu" \
  && conda clean -ya'
 
 
@@ -93,6 +80,30 @@ RUN conda install -y -c pytorch \
 #     torchvision=0.2.0 \
 #  && conda clean -ya'
 
+# # CUDA 8.0
+# make_dockerfile \
+#   'cuda-8.0/Dockerfile' \
+#   'nvidia/cuda:8.0-runtime-ubuntu16.04' \
+#   '# CUDA 8.0-specific steps
+# RUN conda install -y -c pytorch \
+#     cuda80=1.0 \
+#     magma-cuda80=2.3.0 \
+#     "pytorch=1.0.0=py3.6_cuda8.0.61_cudnn7.1.2_1" \
+#     torchvision=0.2.1 \
+#  && conda clean -ya'
+
+# # CUDA 9.0
+# make_dockerfile \
+#   'cuda-9.0/Dockerfile' \
+#   'nvidia/cuda:9.0-base-ubuntu16.04' \
+#   '# CUDA 9.0-specific steps
+# RUN conda install -y -c pytorch \
+#     cuda90=1.0 \
+#     magma-cuda90=2.4.0 \
+#     "pytorch=1.0.0=py3.6_cuda9.0.176_cudnn7.4.1_1" \
+#     torchvision=0.2.1 \
+#  && conda clean -ya'
+
 # # CUDA 9.1
 # make_dockerfile \
 #   'cuda-9.1/Dockerfile' \
@@ -102,17 +113,5 @@ RUN conda install -y -c pytorch \
 #     cuda91=1.0 \
 #     magma-cuda91=2.3.0 \
 #     pytorch=0.4.0 \
-#     torchvision=0.2.1 \
-#  && conda clean -ya'
-
-# # CUDA 9.2
-# make_dockerfile \
-#   'cuda-9.2/Dockerfile' \
-#   'nvidia/cuda:9.2-base-ubuntu16.04' \
-#   '# CUDA 9.2-specific steps
-# RUN conda install -y -c pytorch \
-#     cuda92=1.0 \
-#     magma-cuda92=2.3.0 \
-#     "pytorch=0.4.1=py36_cuda9.2.148_cudnn7.1.4_1" \
 #     torchvision=0.2.1 \
 #  && conda clean -ya'

@@ -33,19 +33,19 @@ ENV PATH=/home/user/miniconda/bin:$PATH
 ENV CONDA_AUTO_UPDATE_CONDA=false
 
 # Create a Python 3.6 environment
-RUN /home/user/miniconda/bin/conda install conda-build \
- && /home/user/miniconda/bin/conda create -y --name py36 python=3.6.5 \
+RUN /home/user/miniconda/bin/conda create -y --name py36 python=3.6.9 \
  && /home/user/miniconda/bin/conda clean -ya
 ENV CONDA_DEFAULT_ENV=py36
 ENV CONDA_PREFIX=/home/user/miniconda/envs/$CONDA_DEFAULT_ENV
 ENV PATH=$CONDA_PREFIX/bin:$PATH
+RUN /home/user/miniconda/bin/conda install conda-build=3.18.9=py36_3 \
+ && /home/user/miniconda/bin/conda clean -ya
 
 # CUDA 10.0-specific steps
 RUN conda install -y -c pytorch \
-    cuda100=1.0 \
-    magma-cuda100=2.4.0 \
-    "pytorch=1.0.0=py3.6_cuda10.0.130_cudnn7.4.1_1" \
-    torchvision=0.2.1 \
+    cudatoolkit=10.0 \
+    "pytorch=1.2.0=py3.6_cuda10.0.130_cudnn7.6.2_0" \
+    "torchvision=0.4.0=py36_cu100" \
  && conda clean -ya
 
 # Install HDF5 Python bindings
@@ -61,9 +61,8 @@ RUN conda install -y requests=2.19.1 \
  && conda clean -ya
 
 # Install Graphviz
-RUN conda install -y graphviz=2.38.0 \
+RUN conda install -y graphviz=2.40.1 python-graphviz=0.8.4 \
  && conda clean -ya
-RUN pip install graphviz==0.8.4
 
 # Install OpenCV3 Python bindings
 RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
