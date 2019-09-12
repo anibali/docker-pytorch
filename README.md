@@ -70,7 +70,7 @@ docker run --rm -it --init \
   --runtime=nvidia \
   --ipc=host \
   --user="$(id -u):$(id -g)" \
-  --volume=$PWD:/app \
+  --volume="$PWD:/app" \
   -e NVIDIA_VISIBLE_DEVICES=0 \
   anibali/pytorch python3 main.py
 ```
@@ -84,7 +84,7 @@ Here's a description of the Docker command-line options shown above:
 * `--user="$(id -u):$(id -g)"`: Sets the user inside the container to match your
   user and group ID. Optional, but is useful for writing files with correct
   ownership.
-* `--volume=$PWD:/app`: Mounts the current working directory into the container.
+* `--volume="$PWD:/app"`: Mounts the current working directory into the container.
   The default working directory inside the container is `/app`. Optional.
 * `-e NVIDIA_VISIBLE_DEVICES=0`: Sets an environment variable to restrict which
   graphics cards are seen by programs running inside the container. Set to `all`
