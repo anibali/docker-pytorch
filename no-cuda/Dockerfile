@@ -69,6 +69,9 @@ RUN conda install -y graphviz=2.40.1 python-graphviz=0.8.4 \
 RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     libgtk2.0-0 \
     libcanberra-gtk-module \
+    libsm6 \
+    libxrender1 \
+    libfontconfig1 \
  && sudo rm -rf /var/lib/apt/lists/*
 RUN conda install -y -c menpo opencv3=3.1.0 \
  && conda clean -ya
