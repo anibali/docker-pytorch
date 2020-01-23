@@ -17,10 +17,13 @@ If you have a CUDA-compatible NVIDIA graphics card, you can use a CUDA-enabled
 version of the PyTorch image to enable hardware acceleration. I have only
 tested this in Ubuntu Linux.
 
-Firstly, ensure that you install the appropriate NVIDIA drivers and libraries.
-If you are running Ubuntu, you can install proprietary NVIDIA drivers
-[from the PPA](https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa)
-and CUDA [from the NVIDIA website](https://developer.nvidia.com/cuda-downloads).
+Firstly, ensure that you install the appropriate NVIDIA drivers. On Ubuntu,
+I've found that the easiest way of ensuring that you have the right version
+of the drivers set up is by installing a version of CUDA _at least as new as
+the image you intend to use_ via
+[the official NVIDIA CUDA download page](https://developer.nvidia.com/cuda-downloads).
+As an example, if you intend on using the `cuda-10.1` image then setting up
+CUDA 10.1 or CUDA 10.2 should ensure that you have the correct graphics drivers.
 
 You will also need to install `nvidia-docker2` to enable GPU device access
 within Docker containers. This can be found at
@@ -29,12 +32,12 @@ within Docker containers. This can be found at
 
 ### Prebuilt images
 
-Pre-built images are available on Docker Hub under the name
+Prebuilt images are available on Docker Hub under the name
 [anibali/pytorch](https://hub.docker.com/r/anibali/pytorch/). For example,
-you can pull the CUDA 10.0 version with:
+you can pull the CUDA 10.1 version with:
 
 ```bash
-$ docker pull anibali/pytorch:cuda-10.0
+$ docker pull anibali/pytorch:cuda-10.1
 ```
 
 The table below lists software versions for each of the currently supported
