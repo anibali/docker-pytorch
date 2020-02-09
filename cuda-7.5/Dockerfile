@@ -18,11 +18,11 @@ WORKDIR /app
 RUN adduser --disabled-password --gecos '' --shell /bin/bash user \
  && chown -R user:user /app
 RUN echo "user ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/90-user
-USER user
 
 # All users can use /home/user as their home directory
 ENV HOME=/home/user
 RUN chmod 777 /home/user
+USER user
 
 # Install Miniconda
 RUN curl -so ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-4.5.1-Linux-x86_64.sh \
