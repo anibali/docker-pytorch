@@ -1,0 +1,7 @@
+name: docker-pytorch
+channels:
+  - defaults
+dependencies:
+  - python=3.8.2
+  - jinja2=2.11.1
+  - pyyaml=5.3.1
