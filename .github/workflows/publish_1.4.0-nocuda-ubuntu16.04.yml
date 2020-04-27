@@ -2,8 +2,6 @@ name: Publish anibali/pytorch:1.4.0-nocuda-ubuntu16.04
 
 on:
   push:
-    paths:
-    - dockerfiles/1.4.0-nocuda-ubuntu16.04/*
 
 jobs:
   publish:
