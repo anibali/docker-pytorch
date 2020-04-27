@@ -45,6 +45,7 @@ def main():
       repository=DOCKER_REPOSITORY,
       tags=tags,
       dockerfile_dir=str(dockerfile_dir),
+      workflow_file=str(workflow_path),
     )
     workflow_path.write_text(workflow_content, encoding='utf-8')
 

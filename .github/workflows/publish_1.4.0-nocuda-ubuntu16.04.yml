@@ -2,6 +2,11 @@ name: Publish anibali/pytorch:1.4.0-nocuda-ubuntu16.04
 
 on:
   push:
+    branches:
+    - master
+    paths:
+    - dockerfiles/1.4.0-nocuda-ubuntu16.04/*
+    - .github/workflows/publish_1.4.0-nocuda-ubuntu16.04.yml
 
 jobs:
   publish:

@@ -6,11 +6,13 @@ on:
     - master
     paths:
     - dockerfiles/1.4.0-cuda9.2-ubuntu16.04/*
+    - .github/workflows/publish_1.4.0-cuda9.2-ubuntu16.04.yml
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
     - uses: docker/build-push-action@v1
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
