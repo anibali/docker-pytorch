@@ -25,8 +25,8 @@ the image you intend to use_ via
 As an example, if you intend on using the `cuda-10.1` image then setting up
 CUDA 10.1 or CUDA 10.2 should ensure that you have the correct graphics drivers.
 
-You will also need to install `nvidia-docker2` to enable GPU device access
-within Docker containers. This can be found at
+You will also need to install the NVIDIA Container Toolkit to enable GPU device
+access within Docker containers. This can be found at
 [NVIDIA/nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
 
 
@@ -35,10 +35,10 @@ within Docker containers. This can be found at
 Prebuilt images are available on Docker Hub under the name
 [anibali/pytorch](https://hub.docker.com/r/anibali/pytorch/).
 
-For example, you can pull an image with PyTorch 1.4.0 and CUDA 10.1 using:
+For example, you can pull an image with PyTorch 1.5.0 and CUDA 10.2 using:
 
 ```bash
-$ docker pull anibali/pytorch:1.4.0-cuda10.1
+$ docker pull anibali/pytorch:1.5.0-cuda10.2
 ```
 
 
@@ -53,18 +53,19 @@ the following command:
 
 ```sh
 docker run --rm -it --init \
-  --runtime=nvidia \
+  --gpus=all \
   --ipc=host \
   --user="$(id -u):$(id -g)" \
   --volume="$PWD:/app" \
-  -e NVIDIA_VISIBLE_DEVICES=0 \
   anibali/pytorch python3 main.py
 ```
 
 Here's a description of the Docker command-line options shown above:
 
-* `--runtime=nvidia`: Required if using CUDA, optional otherwise. Passes the
-  graphics card from the host to the container.
+* `--gpus=all`: Required if using CUDA, optional otherwise. Passes the
+  graphics cards from the host to the container. You can also more precisely
+  control which graphics cards are exposed using this option (see documentation
+  at https://github.com/NVIDIA/nvidia-docker).
 * `--ipc=host`: Required if using multiprocessing, as explained at
   https://github.com/pytorch/pytorch#docker-image.
 * `--user="$(id -u):$(id -g)"`: Sets the user inside the container to match your
@@ -72,14 +73,6 @@ Here's a description of the Docker command-line options shown above:
   ownership.
 * `--volume="$PWD:/app"`: Mounts the current working directory into the container.
   The default working directory inside the container is `/app`. Optional.
-* `-e NVIDIA_VISIBLE_DEVICES=0`: Sets an environment variable to restrict which
-  graphics cards are seen by programs running inside the container. Set to `all`
-  to enable all cards. Optional, defaults to all.
-
-You may wish to consider using [Docker Compose](https://docs.docker.com/compose/)
-to make running containers with many options easier. At the time of writing,
-only version 2.3 of Docker Compose configuration files supports the `runtime`
-option.
 
 #### Running graphical applications
 
@@ -103,7 +96,7 @@ example:
 
 ```sh
 docker run --rm -it --init \
-  --runtime=nvidia \
+  --gpus=all \
   -e "DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
   anibali/pytorch python3 -c "import tkinter; tkinter.Tk().mainloop()"
 ```
