@@ -1,0 +1,22 @@
+name: Publish {{ repository }}:{{ image_id }}
+
+on:
+  push:
+    branches:
+    - master
+    paths:
+    - {{ dockerfile_dir }}/*
+    - {{ workflow_file }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: docker/build-push-action@v1
+      with:
+        username: {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}
+        password: {% raw %}${{ secrets.DOCKER_PASSWORD }}{% endraw %}
+        repository: {{ repository }}
+        tags: {{ tags | join(',') }}
+        path: {{ dockerfile_dir }}
