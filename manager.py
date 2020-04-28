@@ -13,6 +13,10 @@ def main():
   workflow_dir = Path('.github', 'workflows')
   workflow_dir.mkdir(parents=True, exist_ok=True)
 
+  # Delete existing build-and-push workflows.
+  for old_workflow_path in workflow_dir.glob('publish_*.yml'):
+    old_workflow_path.unlink()
+
   # Template file for Docker build and push workflows.
   workflow_template_path = Path('publish_workflow.yml.jinja2')
   workflow_template = jinja2.Template(workflow_template_path.read_text(encoding='utf-8'),
