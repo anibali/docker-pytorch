@@ -18,5 +18,5 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: anibali/pytorch
-        tags: 1.5.0-cuda10.2-ubuntu18.04,1.5.0-cuda10.2,latest
+        tags: 1.5.0-cuda10.2-ubuntu18.04,1.5.0-cuda10.2
         path: dockerfiles/1.5.0-cuda10.2-ubuntu18.04
