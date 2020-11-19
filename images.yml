@@ -1,3 +1,19 @@
+1.7.0-cuda11.0-ubuntu20.04:
+  extra_tags:
+  - 1.7.0-cuda11.0
+  - latest
+  template:
+    path: templates/ubuntu20.04.dockerfile.jinja2
+    vars:
+      base_image: nvidia/cuda:11.0-base-ubuntu20.04
+      additional_steps: |-
+        # CUDA 11.0-specific steps
+        RUN conda install -y -c pytorch \
+            cudatoolkit=11.0.221 \
+            "pytorch=1.7.0=py3.8_cuda11.0.221_cudnn8.0.3_0" \
+            "torchvision=0.8.1=py38_cu110" \
+         && conda clean -ya
+
 1.5.0-cuda10.2-ubuntu18.04:
   extra_tags:
   - 1.5.0-cuda10.2
