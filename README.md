@@ -35,10 +35,10 @@ access within Docker containers. This can be found at
 Prebuilt images are available on Docker Hub under the name
 [anibali/pytorch](https://hub.docker.com/r/anibali/pytorch/).
 
-For example, you can pull an image with PyTorch 1.5.0 and CUDA 10.2 using:
+For example, you can pull an image with PyTorch 1.8.1 and CUDA 11.1 using:
 
 ```bash
-$ docker pull anibali/pytorch:1.5.0-cuda10.2
+$ docker pull anibali/pytorch:1.8.1-cuda11.1
 ```
 
 
