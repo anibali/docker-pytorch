@@ -30,6 +30,7 @@ def main():
       continue
 
     tags = [image_id] + image_opts.get('extra_tags', [])
+    conda_deps = image_opts['template'].get('conda_dependencies', None)
     template_path = Path(image_opts['template']['path'])
     template_vars = image_opts['template'].get('vars', {})
 
@@ -42,6 +43,15 @@ def main():
     dockerfile_path = dockerfile_dir.joinpath('Dockerfile')
     dockerfile_content = template.render(**template_vars)
     dockerfile_path.write_text(dockerfile_content, encoding='utf-8')
+
+    if conda_deps is not None:
+      conda_env = {
+        'name': 'base',
+        'dependencies': conda_deps,
+      }
+      conda_env_path = dockerfile_dir.joinpath('environment.yml')
+      with conda_env_path.open('w') as f:
+        yaml.safe_dump(conda_env, f, sort_keys=False)
 
     workflow_path = workflow_dir.joinpath(f'publish_{image_id}.yml')
     workflow_content = workflow_template.render(
