@@ -101,6 +101,32 @@ docker run --rm -it --init \
   anibali/pytorch python3 -c "import tkinter; tkinter.Tk().mainloop()"
 ```
 
+#### Deriving your own images
+
+The recommended way of adding additional dependencies to an image is to create
+your own Dockerfile using one of the PyTorch images from this project as a base.
+
+For example, let's say that you require OpenCV and wish to work with PyTorch
+1.8.1. You can create your own Dockerfile using
+`anibali/pytorch:1.8.1-cuda11.1-ubuntu20.04` as the base image and install
+OpenCV using additional build steps:
+
+```dockerfile
+FROM anibali/pytorch:1.8.1-cuda11.1-ubuntu20.04
+
+# Set up time zone.
+ENV TZ=UTC
+RUN sudo ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+
+# Install system libraries required by OpenCV.
+RUN sudo apt-get update \
+ && sudo apt-get install -y libgl1-mesa-glx libgtk2.0-0 libsm6 libxext6 \
+ && sudo rm -rf /var/lib/apt/lists/*
+
+# Install OpenCV from PyPI.
+RUN pip install opencv-python==4.5.1.48
+```
+
 
 ### Development and contributing
 
