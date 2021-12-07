@@ -1,7 +1,7 @@
 ## PyTorch Docker image
 
 [![Docker Automated build](https://img.shields.io/docker/automated/anibali/pytorch)](https://hub.docker.com/r/anibali/pytorch/)
-[![Docker Automated build](https://img.shields.io/docker/image-size/anibali/pytorch)](https://hub.docker.com/r/anibali/pytorch/)
+[![Docker Automated build](https://img.shields.io/docker/image-size/anibali/pytorch/latest)](https://hub.docker.com/r/anibali/pytorch/)
 [![Docker Automated build](https://img.shields.io/docker/pulls/anibali/pytorch)](https://hub.docker.com/r/anibali/pytorch/)
 [![Docker Automated build](https://img.shields.io/docker/v/anibali/pytorch/latest)](https://hub.docker.com/r/anibali/pytorch/)
 
