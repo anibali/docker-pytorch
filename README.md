@@ -3,6 +3,7 @@
 [![Docker Automated build](https://img.shields.io/docker/automated/anibali/pytorch.svg)](https://hub.docker.com/r/anibali/pytorch/)
 [![Docker Automated build](https://img.shields.io/docker/image-size/anibali/pytorch.svg)](https://hub.docker.com/r/anibali/pytorch/)
 [![Docker Automated build](https://img.shields.io/docker/pulls/anibali/pytorch.svg)](https://hub.docker.com/r/anibali/pytorch/)
+[![Docker Automated build](https://img.shields.io/docker/v/anibali/pytorch.svg)](https://hub.docker.com/r/anibali/pytorch/)
 
 Ubuntu + PyTorch + CUDA (optional)
 
