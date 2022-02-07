@@ -1,0 +1,11 @@
+name: base
+dependencies:
+- numpy=1.21.2
+- pillow=8.4.0
+- pip=21.2.4
+- python=3.9.7
+- pytorch::pytorch=1.10.2=py3.9_cpu_0
+- scipy=1.7.3
+- pytorch::torchvision=0.11.3=py39_cpu
+- ffmpeg=4.2.2
+- tqdm=4.62.3

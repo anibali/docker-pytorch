@@ -1,12 +1,12 @@
-name: Publish anibali/pytorch:1.10.0-cuda11.3-ubuntu20.04
+name: Publish anibali/pytorch:1.10.2-cuda11.3-ubuntu20.04
 
 on:
   push:
     branches:
     - master
     paths:
-    - dockerfiles/1.10.0-cuda11.3-ubuntu20.04/*
-    - .github/workflows/publish_1.10.0-cuda11.3-ubuntu20.04.yml
+    - dockerfiles/1.10.2-cuda11.3-ubuntu20.04/*
+    - .github/workflows/publish_1.10.2-cuda11.3-ubuntu20.04.yml
 
 jobs:
   publish:
@@ -18,5 +18,5 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: anibali/pytorch
-        tags: 1.10.0-cuda11.3-ubuntu20.04,1.10.0-cuda11.3
-        path: dockerfiles/1.10.0-cuda11.3-ubuntu20.04
+        tags: 1.10.2-cuda11.3-ubuntu20.04,1.10.2-cuda11.3,latest
+        path: dockerfiles/1.10.2-cuda11.3-ubuntu20.04

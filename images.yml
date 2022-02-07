@@ -1,7 +1,44 @@
+1.10.2-cuda11.3-ubuntu20.04:
+  extra_tags:
+  - 1.10.2-cuda11.3
+  - latest
+  template:
+    path: templates/20220207.dockerfile.jinja2
+    vars:
+      base_image: nvidia/cuda:11.3.1-base-ubuntu20.04
+    conda_dependencies:
+      - conda-forge::cudatoolkit=11.3.1
+      - numpy=1.21.2
+      - pillow=8.4.0
+      - pip=21.2.4
+      - python=3.9.7
+      - pytorch::pytorch=1.10.2=py3.9_cuda11.3_cudnn8.2.0_0
+      - scipy=1.7.3
+      - pytorch::torchvision=0.11.3=py39_cu113
+      - ffmpeg=4.2.2
+      - tqdm=4.62.3
+
+1.10.2-nocuda-ubuntu20.04:
+  extra_tags:
+  - 1.10.2-nocuda
+  template:
+    path: templates/20220207.dockerfile.jinja2
+    vars:
+      base_image: nvidia/cuda:11.3.1-base-ubuntu20.04
+    conda_dependencies:
+      - numpy=1.21.2
+      - pillow=8.4.0
+      - pip=21.2.4
+      - python=3.9.7
+      - pytorch::pytorch=1.10.2=py3.9_cpu_0
+      - scipy=1.7.3
+      - pytorch::torchvision=0.11.3=py39_cpu
+      - ffmpeg=4.2.2
+      - tqdm=4.62.3
+
 1.10.0-cuda11.3-ubuntu20.04:
   extra_tags:
   - 1.10.0-cuda11.3
-  - latest
   template:
     path: templates/20211029.dockerfile.jinja2
     vars:
