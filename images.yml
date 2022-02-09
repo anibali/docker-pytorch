@@ -24,7 +24,7 @@
   template:
     path: templates/20220207.dockerfile.jinja2
     vars:
-      base_image: nvidia/cuda:11.3.1-base-ubuntu20.04
+      base_image: ubuntu:20.04
     conda_dependencies:
       - numpy=1.21.2
       - pillow=8.4.0
