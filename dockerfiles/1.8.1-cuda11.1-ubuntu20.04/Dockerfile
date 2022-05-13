@@ -1,5 +1,8 @@
 FROM nvidia/cuda:11.1.1-base-ubuntu20.04
 
+# Remove any third-party apt sources to avoid issues with expiring keys.
+RUN rm -f /etc/apt/sources.list.d/*.list
+
 # Install some basic utilities
 RUN apt-get update && apt-get install -y \
     curl \
