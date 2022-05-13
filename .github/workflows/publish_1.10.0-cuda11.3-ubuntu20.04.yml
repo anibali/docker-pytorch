@@ -7,6 +7,7 @@ on:
     paths:
     - dockerfiles/1.10.0-cuda11.3-ubuntu20.04/*
     - .github/workflows/publish_1.10.0-cuda11.3-ubuntu20.04.yml
+  workflow_dispatch:
 
 jobs:
   publish:

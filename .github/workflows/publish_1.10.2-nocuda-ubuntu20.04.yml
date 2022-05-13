@@ -7,6 +7,7 @@ on:
     paths:
     - dockerfiles/1.10.2-nocuda-ubuntu20.04/*
     - .github/workflows/publish_1.10.2-nocuda-ubuntu20.04.yml
+  workflow_dispatch:
 
 jobs:
   publish:
