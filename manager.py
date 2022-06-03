@@ -30,6 +30,7 @@ def main():
       continue
 
     tags = [image_id] + image_opts.get('extra_tags', [])
+    conda_chans = image_opts['template'].get('conda_channels', None)
     conda_deps = image_opts['template'].get('conda_dependencies', None)
     template_path = Path(image_opts['template']['path'])
     template_vars = image_opts['template'].get('vars', {})
@@ -45,10 +46,11 @@ def main():
     dockerfile_path.write_text(dockerfile_content, encoding='utf-8')
 
     if conda_deps is not None:
-      conda_env = {
-        'name': 'base',
-        'dependencies': conda_deps,
-      }
+      conda_env = {}
+      conda_env['name'] = 'base'
+      if conda_chans is not None:
+        conda_env['channels'] = conda_chans
+      conda_env['dependencies'] = conda_deps
       conda_env_path = dockerfile_dir.joinpath('environment.yml')
       with conda_env_path.open('w') as f:
         yaml.safe_dump(conda_env, f, sort_keys=False)

@@ -1,0 +1,13 @@
+name: base
+channels:
+- conda-forge
+dependencies:
+- numpy=1.22.4
+- pillow=9.1.1
+- pip=22.1.2
+- python=3.9.13
+- pytorch::pytorch=1.11.0=py3.9_cpu_0
+- pytorch::torchvision=0.12.0=py39_cpu
+- scipy=1.8.1
+- ffmpeg=5.0.1
+- tqdm=4.64.0
