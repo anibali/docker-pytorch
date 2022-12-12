@@ -1,0 +1,12 @@
+name: base
+channels:
+- conda-forge
+- nvidia
+dependencies:
+- pip=22.3.1
+- python=3.10.8
+- pytorch::pytorch-cuda=11.7
+- pytorch::pytorch=1.13.0=py3.10_cuda11.7_cudnn8.5.0_0
+- pytorch::torchvision=0.14.0=py310_cu117
+- scipy=1.9.3
+- tqdm=4.64.1

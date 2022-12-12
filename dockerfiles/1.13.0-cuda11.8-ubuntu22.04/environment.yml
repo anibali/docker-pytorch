@@ -1,0 +1,12 @@
+name: base
+channels:
+- conda-forge
+dependencies:
+- cudatoolkit=11.8
+- mamba=1.1.0
+- pip=22.3.1
+- python=3.9.15
+- pytorch-gpu=1.13.0
+- scipy=1.9.3
+- torchvision=0.14.0
+- tqdm=4.64.1
