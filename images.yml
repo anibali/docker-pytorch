@@ -1,11 +1,49 @@
+1.13.0-cuda11.8-ubuntu22.04:
+  extra_tags:
+  - 1.13.0-cuda11.8
+  - latest
+  template:
+    path: templates/20221212.dockerfile.jinja2
+    vars:
+      base_image: nvidia/cuda:11.8.0-base-ubuntu22.04
+    conda_channels:
+      - conda-forge
+    conda_dependencies:
+      - cudatoolkit=11.8
+      - mamba=1.1.0
+      - pip=22.3.1
+      - python=3.9.15
+      - pytorch-gpu=1.13.0
+      - scipy=1.9.3
+      - torchvision=0.14.0
+      - tqdm=4.64.1
+
+1.13.0-nocuda-ubuntu22.04:
+  extra_tags:
+  - 1.13.0-nocuda
+  template:
+    path: templates/20221212.dockerfile.jinja2
+    vars:
+      base_image: ubuntu:22.04
+    conda_channels:
+      - conda-forge
+    conda_dependencies:
+      - mamba=1.1.0
+      - pip=22.3.1
+      - python=3.9.15
+      - pytorch-cpu=1.13.0
+      - scipy=1.9.3
+      - torchvision=0.14.0
+      - tqdm=4.64.1
+
 1.11.0-cuda11.5-ubuntu20.04:
   extra_tags:
     - 1.11.0-cuda11.5
-    - latest
   template:
     path: templates/20220603.dockerfile.jinja2
     vars:
       base_image: nvidia/cuda:11.5.1-base-ubuntu20.04
+    conda_lock: false
     conda_channels:
       - conda-forge
     conda_dependencies:
@@ -27,6 +65,7 @@
     path: templates/20220603.dockerfile.jinja2
     vars:
       base_image: ubuntu:20.04
+    conda_lock: false
     conda_channels:
       - conda-forge
     conda_dependencies:
@@ -47,6 +86,7 @@
     path: templates/20220207.dockerfile.jinja2
     vars:
       base_image: nvidia/cuda:11.3.1-base-ubuntu20.04
+    conda_lock: false
     conda_dependencies:
       - conda-forge::cudatoolkit=11.3.1
       - numpy=1.21.2
@@ -66,6 +106,7 @@
     path: templates/20220207.dockerfile.jinja2
     vars:
       base_image: ubuntu:20.04
+    conda_lock: false
     conda_dependencies:
       - numpy=1.21.2
       - pillow=8.4.0
@@ -78,6 +119,7 @@
       - tqdm=4.62.3
 
 1.10.0-cuda11.3-ubuntu20.04:
+  deprecated: true
   extra_tags:
   - 1.10.0-cuda11.3
   template:
@@ -96,6 +138,7 @@
       - tqdm=4.62.3
 
 1.10.0-nocuda-ubuntu20.04:
+  deprecated: true
   extra_tags:
   - 1.10.0-nocuda
   template:
@@ -113,6 +156,7 @@
       - tqdm=4.62.3
 
 1.8.1-cuda11.1-ubuntu20.04:
+  deprecated: true
   extra_tags:
   - 1.8.1-cuda11.1
   template:
@@ -128,6 +172,7 @@
          && conda clean -ya
 
 1.7.0-cuda11.0-ubuntu20.04:
+  deprecated: true
   extra_tags:
   - 1.7.0-cuda11.0
   template:
