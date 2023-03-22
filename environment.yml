@@ -2,8 +2,8 @@ name: docker-pytorch
 channels:
   - conda-forge
 dependencies:
-  - python=3.10.8
-  - pip=22.2.2
+  - python=3.10.9
+  - pip=23.0.1
   - jinja2=3.1.2
   - pyyaml=6.0
-  - conda-lock==1.2.1
+  - conda-lock=1.4.0

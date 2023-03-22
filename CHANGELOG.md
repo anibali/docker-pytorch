@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## 2023-03-23
+
+### Added
+
+- The following new Docker images have been added:
+  - `2.0.0-cuda11.8-ubuntu22.04`
+  - `2.0.0-nocuda-ubuntu22.04
+
+### Changed
+
+- New Dockerfiles have returned to using the `pytorch` and `nvidia` channels
+  for PyTorch conda packages.
+
 ## 2022-12-12
 
 ### Added
