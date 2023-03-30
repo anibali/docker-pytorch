@@ -43,5 +43,8 @@ RUN micromamba create -qy -n base -f /app/conda-linux-64.lock \
  && micromamba shell init --shell=bash --prefix="$MAMBA_ROOT_PREFIX" \
  && micromamba clean -qya
 
+# Fix for https://github.com/pytorch/pytorch/issues/97041
+RUN ln -s "$CONDA_PREFIX/lib/libnvrtc.so.11.8.89" "$CONDA_PREFIX/lib/libnvrtc.so"
+
 # Set the default command to python3.
 CMD ["python3"]
