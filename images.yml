@@ -1,7 +1,52 @@
+2.0.1-cuda11.8-ubuntu22.04:
+  extra_tags:
+  - 2.0.1-cuda11.8
+  - latest
+  template:
+    path: templates/20221212.dockerfile.jinja2
+    vars:
+      base_image: nvidia/cuda:11.8.0-base-ubuntu22.04
+      post_conda_steps: |
+        # Fix for https://github.com/pytorch/pytorch/issues/97041
+        RUN ln -s "$CONDA_PREFIX/lib/libnvrtc.so.11.8.89" "$CONDA_PREFIX/lib/libnvrtc.so"
+    conda_channels:
+      - conda-forge
+      - nvidia
+      - nodefaults
+    conda_dependencies:
+      - mamba=1.4.9
+      - pip=23.2.1
+      - python=3.11.4
+      - pytorch::pytorch=2.0.1
+      - pytorch::pytorch-cuda=11.8
+      - scipy=1.11.2
+      - pytorch::torchvision=0.15.2
+      - tqdm=4.66.1
+
+2.0.1-nocuda-ubuntu22.04:
+  extra_tags:
+  - 2.0.1-nocuda
+  template:
+    path: templates/20221212.dockerfile.jinja2
+    vars:
+      base_image: ubuntu:22.04
+    conda_channels:
+      - conda-forge
+      - nodefaults
+    conda_dependencies:
+      - pytorch::cpuonly
+      - mamba=1.4.9
+      - pip=23.2.1
+      - python=3.11.4
+      - pytorch::pytorch=2.0.1
+      - scipy=1.11.2
+      - pytorch::torchvision=0.15.2
+      - tqdm=4.66.1
+
 2.0.0-cuda11.8-ubuntu22.04:
+  deprecated: true
   extra_tags:
   - 2.0.0-cuda11.8
-  - latest
   template:
     path: templates/20221212.dockerfile.jinja2
     vars:
@@ -24,6 +69,7 @@
       - tqdm=4.65.0
 
 2.0.0-nocuda-ubuntu22.04:
+  deprecated: true
   extra_tags:
   - 2.0.0-nocuda
   template:
@@ -43,7 +89,49 @@
       - pytorch::torchvision=0.15.0
       - tqdm=4.65.0
 
+1.13.1-cuda11.7-ubuntu22.04:
+  extra_tags:
+  - 1.13.1-cuda11.7
+  template:
+    path: templates/20221212.dockerfile.jinja2
+    vars:
+      base_image: nvidia/cuda:11.7.1-base-ubuntu22.04
+    conda_channels:
+      - conda-forge
+      - nvidia
+      - nodefaults
+    conda_dependencies:
+      - mamba=1.4.9
+      - pip=23.2.1
+      - python=3.9.17
+      - pytorch::pytorch=1.13.1
+      - pytorch::pytorch-cuda=11.7
+      - scipy=1.11.2
+      - pytorch::torchvision=0.14.1
+      - tqdm=4.66.1
+
+1.13.1-nocuda-ubuntu22.04:
+  extra_tags:
+  - 1.13.1-nocuda
+  template:
+    path: templates/20221212.dockerfile.jinja2
+    vars:
+      base_image: ubuntu:22.04
+    conda_channels:
+      - conda-forge
+      - nodefaults
+    conda_dependencies:
+      - pytorch::cpuonly
+      - mamba=1.4.9
+      - pip=23.2.1
+      - python=3.9.17
+      - pytorch::pytorch=1.13.1
+      - scipy=1.11.2
+      - pytorch::torchvision=0.14.1
+      - tqdm=4.66.1
+
 1.13.0-cuda11.8-ubuntu22.04:
+  deprecated: true
   extra_tags:
   - 1.13.0-cuda11.8
   template:
@@ -63,6 +151,7 @@
       - tqdm=4.64.1
 
 1.13.0-nocuda-ubuntu22.04:
+  deprecated: true
   extra_tags:
   - 1.13.0-nocuda
   template:
@@ -81,6 +170,7 @@
       - tqdm=4.64.1
 
 1.11.0-cuda11.5-ubuntu20.04:
+  deprecated: true
   extra_tags:
     - 1.11.0-cuda11.5
   template:
@@ -103,6 +193,7 @@
       - tqdm=4.64.0
 
 1.11.0-nocuda-ubuntu20.04:
+  deprecated: true
   extra_tags:
   - 1.11.0-nocuda
   template:
@@ -124,6 +215,7 @@
       - tqdm=4.64.0
 
 1.10.2-cuda11.3-ubuntu20.04:
+  deprecated: true
   extra_tags:
   - 1.10.2-cuda11.3
   template:
@@ -144,6 +236,7 @@
       - tqdm=4.62.3
 
 1.10.2-nocuda-ubuntu20.04:
+  deprecated: true
   extra_tags:
   - 1.10.2-nocuda
   template:

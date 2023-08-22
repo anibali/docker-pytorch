@@ -1,12 +1,12 @@
-name: Publish anibali/pytorch:2.0.0-nocuda-ubuntu22.04
+name: Publish anibali/pytorch:1.13.1-cuda11.7-ubuntu22.04
 
 on:
   push:
     branches:
     - master
     paths:
-    - dockerfiles/2.0.0-nocuda-ubuntu22.04/*
-    - .github/workflows/publish_2.0.0-nocuda-ubuntu22.04.yml
+    - dockerfiles/1.13.1-cuda11.7-ubuntu22.04/*
+    - .github/workflows/publish_1.13.1-cuda11.7-ubuntu22.04.yml
   workflow_dispatch:
 
 jobs:
@@ -19,5 +19,5 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: anibali/pytorch
-        tags: 2.0.0-nocuda-ubuntu22.04,2.0.0-nocuda
-        path: dockerfiles/2.0.0-nocuda-ubuntu22.04
+        tags: 1.13.1-cuda11.7-ubuntu22.04,1.13.1-cuda11.7
+        path: dockerfiles/1.13.1-cuda11.7-ubuntu22.04

@@ -1,0 +1,14 @@
+name: base
+channels:
+- conda-forge
+- nvidia
+- nodefaults
+dependencies:
+- mamba=1.4.9
+- pip=23.2.1
+- python=3.11.4
+- pytorch::pytorch=2.0.1
+- pytorch::pytorch-cuda=11.8
+- scipy=1.11.2
+- pytorch::torchvision=0.15.2
+- tqdm=4.66.1

@@ -37,10 +37,10 @@ access within Docker containers. This can be found at
 Prebuilt images are available on Docker Hub under the name
 [anibali/pytorch](https://hub.docker.com/r/anibali/pytorch/).
 
-For example, you can pull an image with PyTorch 2.0.0 and CUDA 11.8 using:
+For example, you can pull an image with PyTorch 2.0.1 and CUDA 11.8 using:
 
 ```bash
-$ docker pull anibali/pytorch:2.0.0-cuda11.8
+$ docker pull anibali/pytorch:2.0.1-cuda11.8
 ```
 
 
@@ -109,12 +109,12 @@ The recommended way of adding additional dependencies to an image is to create
 your own Dockerfile using one of the PyTorch images from this project as a base.
 
 For example, let's say that you require OpenCV and wish to work with PyTorch
-2.0.0. You can create your own Dockerfile using
-`anibali/pytorch:2.0.0-cuda11.8-ubuntu22.04` as the base image and install
+2.0.1. You can create your own Dockerfile using
+`anibali/pytorch:2.0.1-cuda11.8-ubuntu22.04` as the base image and install
 OpenCV using additional build steps:
 
 ```dockerfile
-FROM anibali/pytorch:2.0.0-cuda11.8-ubuntu22.04
+FROM anibali/pytorch:2.0.1-cuda11.8-ubuntu22.04
 
 # Set up time zone.
 ENV TZ=UTC

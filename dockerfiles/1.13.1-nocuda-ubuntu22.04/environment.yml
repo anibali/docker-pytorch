@@ -1,0 +1,13 @@
+name: base
+channels:
+- conda-forge
+- nodefaults
+dependencies:
+- pytorch::cpuonly
+- mamba=1.4.9
+- pip=23.2.1
+- python=3.9.17
+- pytorch::pytorch=1.13.1
+- scipy=1.11.2
+- pytorch::torchvision=0.14.1
+- tqdm=4.66.1
